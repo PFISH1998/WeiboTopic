@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="weibo@172.17.4.62" uuid="59eadcdd-23a4-442f-82c2-1fdb3922a4a1">
+    <data-source source="LOCAL" name="weibo" uuid="59eadcdd-23a4-442f-82c2-1fdb3922a4a1">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://172.17.4.62:3306/weibo</jdbc-url>
+      <jdbc-url>jdbc:mysql://140.143.17.162:3306/weibo</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

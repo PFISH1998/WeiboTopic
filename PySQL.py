@@ -27,7 +27,8 @@ class PySQL:
                 host=self.host,
                 user=self.user,
                 password=self.pwd,
-                database=self.db
+                database=self.db,
+                charset='utf8'
             )
         except Exception as e:
             print("连接数据库失败：", e)
