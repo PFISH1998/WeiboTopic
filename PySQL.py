@@ -37,14 +37,20 @@ class PySQL:
 
     # 查询类语句
     def exec_query(self, sql):
-        res = ''
+        res = -1
         try:
             self._cur.execute(sql)
             res = self._cur.fetchall()
         except Exception as e:
+            res = -1
             print("查询失败：", e)
-        else:
+        finally:
             return res
+
+    # 抛异常
+    def exec_query_raise_exception(self, sql):
+        self._cur.execute(sql)
+        return self._cur.fetchall()
 
     # 非查询类语句
     def exec_non_query(self, sql):

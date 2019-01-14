@@ -15,7 +15,6 @@ class WeiboSearch:
         # api_url = 'https://s.weibo.com/top/summary'
         r = requests.get(self.api_url)
         json_str = json.loads(r.text)
-        # print(json_str)
         try:
             content = json_str['data']['cards'][0]['card_group']
         except KeyError as e:
@@ -29,36 +28,41 @@ class WeiboSearch:
             print(e)
             # time.sleep(3)
             # self.get_search_page()
-
-        finally:
+        else:
             info_list = []
             for i in content:
                 info = dict()
                 try:
                     info['title'] = i['desc']
                     info['hot'] = int(i['desc_extr'])
+                    print(info)
                     info_list.append(info)
                 except KeyError:
                     pass
-            print('-----------------')
-            print(info_list)
             return info_list
 
-    def save_data(self, data):
+    def save_data(self, search_list):
         mysql = PySQL()
         search_time = int(time.time())
-        print(time.asctime(time.localtime(time.time())))
-        for i in data:
+        print('---------{}----------'.format(time.asctime(time.localtime(time.time()))))
+        for i in search_list:
+            title_id = ''
             title = i['title']
             hot = i['hot']
-            insert_sql = "INSERT INTO weibo_hot(title, add_time, update_time)" \
-                         "VALUES ('{}', {}, {}) ON DUPLICATE KEY UPDATE " \
-                         "UPDATE_TIME = {}".format(title, search_time, search_time, search_time)
-            mysql.exec_non_query(insert_sql)
-
             select_sql = "SELECT ID FROM weibo_hot WHERE title='{}'".format(title)
-            result = mysql.exec_query(select_sql)
-            title_id = result[0][0]
+            is_result = mysql.exec_query(select_sql)
+            # 查询有结果
+            if is_result:
+                title_id = is_result[0][0]
+            else:
+                insert_sql = "INSERT INTO weibo_hot (title, add_time, update_time) " \
+                             "VALUES ('{}', {}, {})".format(title, search_time, search_time)
+                mysql.exec_non_query(insert_sql)
+
+                select_sql = "SELECT ID FROM weibo_hot WHERE title='{}'".format(title)
+                result = mysql.exec_query(select_sql)
+                title_id = result[0][0]
+
             sql = "INSERT INTO weibo_hot_history (search_time, search_id, hot) " \
                   "VALUES ({},'{}',{})".format(search_time, title_id, hot)
             mysql.exec_non_query(sql)
@@ -89,6 +93,10 @@ class WeiboSearch:
 if __name__ == '__main__':
     weibo = WeiboSearch()
     while True:
-        data = weibo.get_search_page()
-        weibo.save_data(data)
+        try:
+            data = weibo.get_search_page()
+            weibo.save_data(data)
+        except Exception as e:
+            print("e", e)
+            pass
         time.sleep(120)
