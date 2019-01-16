@@ -16,14 +16,17 @@ def get_weibo_data(search_id=None):
     for i in result:
         st = time.strftime('%H:%M', time.localtime(i[0]))
         x_time.append(st)
-        print(x_time)
         y_hot.append(i[1])
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.plot(x_time, y_hot)
-    plt.gcf().autofmt_xdate()
     plt.title('"{}" 热搜热度变化图'.format(str(title)))
     plt.show()
 
+
+def get_one_day_result():
+    # 一天时间
+    day_time = 86400
+    sql = 'select id, title from weibo_hot where {}-update_time < 86400'.format(time.time())
 
 
 get_weibo_data(search_id=61543)
