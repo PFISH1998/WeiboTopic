@@ -974,12 +974,5 @@ title</ColNames>
       <ColNames>search_id</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="243" parent="231" name="weibo_hot_history_ibfk_1">
-      <ColNames>search_id</ColNames>
-      <RefSchemaName>weibo</RefSchemaName>
-      <RefTableName>weibo_hot</RefTableName>
-      <RefColNames>id</RefColNames>
-      <OnDelete>cascade</OnDelete>
-    </foreign-key>
   </database-model>
 </dataSource>

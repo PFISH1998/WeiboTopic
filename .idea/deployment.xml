@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" serverName="ubuntu">
     <serverData>
-      <paths name="root">
+      <paths name="ubuntu">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/python/other" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/python/weiboTopic" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="" local="$PROJECT_DIR$/../WeiboMonitor" />
           </mappings>
         </serverdata>
       </paths>
