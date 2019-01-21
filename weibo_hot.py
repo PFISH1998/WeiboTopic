@@ -1,5 +1,5 @@
 from PySQL import PySQL
-import time
+import time//
 
 def get_topic_time():
     p = PySQL()

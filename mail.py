@@ -5,7 +5,7 @@ from email.utils import formataddr
 from HotTopic import HotTopicChoose
 from pyhtml import HTML
 
-
+# , '330170928@qq.com'
 class WeiboMail:
 
     def __init__(self):
@@ -19,7 +19,7 @@ class WeiboMail:
     # content 为发送内容
     def send_mail(self, content='Python邮件发送测试',
                   subject='weiboRobotNote',
-                  to_list=['perry1998@outlook.com', '1047962209@qq.com', 'nick250250@qq.com', '330170928@qq.com']):
+                  to_list=['perry1998@outlook.com', '1047962209@qq.com', 'nick250250@qq.com']):
         for to in to_list:
             try:
                 message = MIMEText(content, 'html', 'utf-8')

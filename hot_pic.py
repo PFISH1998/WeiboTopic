@@ -14,7 +14,7 @@ def get_weibo_data(search_id=None):
     x_time = []
     y_hot = []
     for i in result:
-        st = time.strftime('%H:%M', time.localtime(i[0]))
+        st = i[0]
         x_time.append(st)
         y_hot.append(i[1])
     plt.rcParams['font.sans-serif'] = ['SimHei']
@@ -29,4 +29,4 @@ def get_one_day_result():
     sql = 'select id, title from weibo_hot where {}-update_time < 86400'.format(time.time())
 
 
-get_weibo_data(search_id=61543)
+get_weibo_data(search_id=62022)

@@ -7,6 +7,8 @@ import time
 
 class WeiboDataSearch:
     def __init__(self):
+        self._one_day = 86400
+        self._one_hour = 3600
         self._day_sum_sql = "SELECT title, SUM(hot), weibo_hot.update_time FROM weibo_hot " \
                             "INNER JOIN weibo_hot_history ON weibo_hot.id = weibo_hot_history.search_id " \
                             "GROUP BY title HAVING {now_time} - update_time < {pass_time} " \
@@ -18,7 +20,7 @@ class WeiboDataSearch:
             now_time=int(time.time()),
             pass_time=1,
             num=30,
-            title=None
+            title=''
         )
 
         badargs = set(kwargs) - set(value)
@@ -28,24 +30,17 @@ class WeiboDataSearch:
 
         value.update(kwargs)
         sql = self._day_sum_sql.format(**value)
-        print(sql)
         return PySQL().exec_query(sql=sql)
 
     def get_day_result(self, **kwargs):
-        one_day = 86400
         value = dict(pass_time=1)
         value.update(kwargs)
-        value['pass_time'] = one_day * value['pass_time']
+        value['pass_time'] = self._one_day * value['pass_time']
         return self._get_result(**value)
 
     def get_hour_result(self, **kwargs):
-        one_hour = 3600
         value = dict(pass_time=1)
         value.update(kwargs)
-        value['pass_time'] = one_hour * value['pass_time']
+        value['pass_time'] = self._one_hour * value['pass_time']
         return self._get_result(**value)
 
-
-w = WeiboDataSearch()
-r = w.get_day_result(title='中', pass_time=2)
-print(r)
